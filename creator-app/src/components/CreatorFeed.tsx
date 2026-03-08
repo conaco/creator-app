@@ -15,10 +15,12 @@ export default function CreatorFeed() {
         );
 
     return (
-        <div className="px-4 space-y-4 mt-2">
-            {filteredCreators.map((creator, index) => (
-                <CreatorCard key={creator.id} creator={creator} index={index} />
-            ))}
+        <div className="mt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filteredCreators.map((creator, index) => (
+                    <CreatorCard key={creator.id} creator={creator} index={index} />
+                ))}
+            </div>
 
             {filteredCreators.length === 0 && (
                 <div className="text-center py-20">

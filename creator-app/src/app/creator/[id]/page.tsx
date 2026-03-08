@@ -10,6 +10,7 @@ export default function CreatorProfilePage({ params }: { params: Promise<{ id: s
     const index = creators.indexOf(creator);
     const [activeTab, setActiveTab] = useState("public");
     const [isSubscribed, setIsSubscribed] = useState(false);
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     const tabs = [
         { id: "public", label: "Público" },
@@ -31,10 +32,16 @@ export default function CreatorProfilePage({ params }: { params: Promise<{ id: s
             </Link>
 
             {/* Cover Image */}
-            <div
-                className="relative h-72 w-full"
-                style={{ background: coverGradients[index % coverGradients.length] }}
-            >
+            <div className="relative h-72 w-full bg-dark-800">
+                {creator.coverImage ? (
+                    <img
+                        src={creator.coverImage}
+                        alt={`Capa de ${creator.name}`}
+                        className="w-full h-full object-cover"
+                    />
+                ) : (
+                    <div className="w-full h-full" style={{ background: coverGradients[index % coverGradients.length] }} />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-dark-900" />
 
                 {/* Live badge */}
@@ -158,11 +165,16 @@ export default function CreatorProfilePage({ params }: { params: Promise<{ id: s
                             {[...Array(9)].map((_, i) => (
                                 <div
                                     key={i}
-                                    className="aspect-square rounded-lg overflow-hidden"
-                                    style={{ background: coverGradients[(i + index) % coverGradients.length] }}
+                                    className="aspect-square rounded-lg overflow-hidden relative group cursor-pointer"
+                                    onClick={() => setSelectedImage(`https://picsum.photos/seed/public-${creator.id}-${i}/800/800`)}
                                 >
-                                    <div className="w-full h-full flex items-center justify-center text-white/20 text-2xl hover:text-white/40 transition-colors cursor-pointer">
-                                        📸
+                                    <img
+                                        src={`https://picsum.photos/seed/public-${creator.id}-${i}/400/400`}
+                                        alt="Post"
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer">
+                                        <span className="text-white text-2xl">📸</span>
                                     </div>
                                 </div>
                             ))}
@@ -174,15 +186,20 @@ export default function CreatorProfilePage({ params }: { params: Promise<{ id: s
                             {[...Array(6)].map((_, i) => (
                                 <div
                                     key={i}
-                                    className="aspect-square rounded-lg overflow-hidden relative"
-                                    style={{ background: coverGradients[(i + 3 + index) % coverGradients.length] }}
+                                    className="aspect-square rounded-lg overflow-hidden relative group cursor-pointer"
+                                    onClick={() => setSelectedImage(`https://picsum.photos/seed/premium-${creator.id}-${i}/800/800`)}
                                 >
-                                    <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" opacity="0.5">
+                                    <img
+                                        src={`https://picsum.photos/seed/premium-${creator.id}-${i}/400/400`}
+                                        alt="Premium Post"
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                    <div className="absolute inset-0 bg-black/60 backdrop-blur-md flex flex-col items-center justify-center group-hover:bg-black/40 transition-colors cursor-pointer">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" opacity="0.8">
                                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                                             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                                         </svg>
-                                        <span className="text-[10px] text-white/40 mt-1">Premium</span>
+                                        <span className="text-[10px] text-white/60 font-bold mt-2 tracking-wider uppercase">Premium</span>
                                     </div>
                                 </div>
                             ))}
@@ -192,16 +209,42 @@ export default function CreatorProfilePage({ params }: { params: Promise<{ id: s
                     {activeTab === "shop" && (
                         <div className="space-y-3">
                             {[
-                                { name: "Ensaio Completo (20 fotos)", price: 15 },
-                                { name: "Vídeo Exclusivo Behind-the-Scenes", price: 8 },
-                                { name: "Pack Tutorial Profissional", price: 25 },
-                            ].map((item) => (
-                                <div key={item.name} className="bg-dark-700 rounded-xl p-4 flex items-center justify-between border border-white/5 hover:border-purple-500/20 transition-all">
-                                    <div>
-                                        <h4 className="text-sm font-semibold text-white">{item.name}</h4>
-                                        <span className="text-xs text-white/40">{item.price} créditos</span>
+                                { id: "item1", name: "Ensaio Completo (20 fotos)", type: "Fotos", price: 15 },
+                                { id: "item2", name: "Vídeo Exclusivo Behind-the-Scenes", type: "Vídeo", price: 8 },
+                                { id: "item3", name: "Pack Tutorial Profissional", type: "Download", price: 25 },
+                            ].map((item, i) => (
+                                <div key={item.id} className="bg-dark-700 rounded-xl p-3 flex items-center justify-between border border-white/5 hover:border-purple-500/20 transition-all group">
+                                    <div className="flex items-center gap-3">
+                                        {/* Thumbnail Preview */}
+                                        <div
+                                            className="w-16 h-16 rounded-lg overflow-hidden relative shrink-0 cursor-pointer"
+                                            onClick={() => setSelectedImage(`https://picsum.photos/seed/shop-${creator.id}-${i}/800/800`)}
+                                        >
+                                            <img
+                                                src={`https://picsum.photos/seed/shop-${creator.id}-${i}/200/200`}
+                                                alt={item.name}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            />
+                                            {item.type === "Vídeo" && (
+                                                <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white" className="opacity-80">
+                                                        <path d="M8 5v14l11-7z" />
+                                                    </svg>
+                                                </div>
+                                            )}
+                                        </div>
+                                        {/* Info */}
+                                        <div>
+                                            <h4 className="text-sm font-semibold text-white leading-tight">{item.name}</h4>
+                                            <div className="flex items-center gap-2 mt-1 line-clamp-1">
+                                                <span className="text-[10px] font-bold text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                                                    {item.type}
+                                                </span>
+                                                <span className="text-xs text-white/40">{item.price} créditos</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <button className="gradient-purple text-white text-xs font-bold rounded-lg px-4 py-2 hover:shadow-lg hover:shadow-purple-500/20 transition-all">
+                                    <button className="shrink-0 gradient-purple text-white text-xs font-bold rounded-lg px-4 py-2 hover:shadow-lg hover:shadow-purple-500/20 transition-all ml-2">
                                         Comprar
                                     </button>
                                 </div>
@@ -239,6 +282,27 @@ export default function CreatorProfilePage({ params }: { params: Promise<{ id: s
                     )}
                 </div>
             </div>
+
+            {/* Image Modal Preview */}
+            {selectedImage && (
+                <div
+                    className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"
+                    onClick={() => setSelectedImage(null)}
+                >
+                    <button
+                        className="absolute top-6 right-6 text-white hover:text-white/70 bg-white/10 hover:bg-white/20 rounded-full p-2 transition-all cursor-pointer"
+                        onClick={() => setSelectedImage(null)}
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
+                    </button>
+                    <img
+                        src={selectedImage}
+                        alt="Preview"
+                        className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg shadow-2xl scale-100"
+                        onClick={(e) => e.stopPropagation()}
+                    />
+                </div>
+            )}
         </div>
     );
 }

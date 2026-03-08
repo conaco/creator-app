@@ -46,8 +46,8 @@ export default function BottomNav() {
             </Link>
 
             {/* Nav Bar */}
-            <nav className="fixed bottom-0 left-0 right-0 z-50 glass-heavy border-t border-white/5" aria-label="Navegação principal">
-                <div className="max-w-lg mx-auto flex items-center justify-around px-2 py-2">
+            <nav className="fixed bottom-0 left-0 right-0 z-50 glass-heavy border-t border-white/5 flex justify-center" aria-label="Navegação principal">
+                <div className="w-full max-w-[1024px] flex items-center justify-around px-4 py-2">
                     {tabs.map((tab) => {
                         const isActive = pathname === tab.href || (tab.href !== "/" && pathname.startsWith(tab.href));
                         const isFeedActive = tab.href === "/" && pathname === "/";

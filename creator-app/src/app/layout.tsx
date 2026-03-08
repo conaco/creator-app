@@ -41,8 +41,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${inter.variable} font-sans antialiased bg-dark-900 text-white`}>
-        <div className="max-w-lg mx-auto min-h-screen relative">
+      <body className={`${inter.variable} font-sans antialiased bg-dark-900 text-white flex flex-col items-center`}>
+        <div className="w-full min-h-screen relative" style={{ maxWidth: '1024px' }}>
           {children}
         </div>
         <BottomNav />

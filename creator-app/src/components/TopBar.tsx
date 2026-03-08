@@ -5,8 +5,8 @@ import { LogoIcon, CreditIcon } from "@/components/Icons";
 
 export default function TopBar() {
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 glass-heavy border-b border-white/5">
-            <div className="max-w-lg mx-auto flex items-center justify-between px-4 py-3">
+        <header className="fixed top-0 left-0 right-0 z-50 glass-heavy border-b border-white/5 flex justify-center">
+            <div className="w-full max-w-[1024px] flex items-center justify-between px-4 py-3">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 group" aria-label="Ir para o feed">
                     <div className="w-9 h-9 gradient-purple rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20 group-hover:shadow-purple-500/40 transition-shadow">
