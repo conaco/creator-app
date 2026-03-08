@@ -30,12 +30,20 @@ export default function LiveCreatorsRow() {
                         {/* Avatar with live ring */}
                         <div className="live-ring animate-pulse-live">
                             <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-dark-900">
-                                <div
-                                    className="w-full h-full rounded-full flex items-center justify-center text-white font-bold text-lg"
-                                    style={{ background: avatarGradients[index % avatarGradients.length] }}
-                                >
-                                    {creator.name.charAt(0)}
-                                </div>
+                                {creator.avatar ? (
+                                    <img
+                                        src={creator.avatar}
+                                        alt={creator.name}
+                                        className="w-full h-full object-cover rounded-full"
+                                    />
+                                ) : (
+                                    <div
+                                        className="w-full h-full rounded-full flex items-center justify-center text-white font-bold text-lg"
+                                        style={{ background: avatarGradients[index % avatarGradients.length] }}
+                                    >
+                                        {creator.name.charAt(0)}
+                                    </div>
+                                )}
                             </div>
                         </div>
                         {/* Name */}

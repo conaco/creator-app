@@ -13,6 +13,18 @@ export const metadata: Metadata = {
   description: "Descubra e apoie criadores de conteúdo exclusivo. Lives interativas, mídia premium e uma comunidade vibrante.",
   keywords: ["creator", "conteúdo", "live", "streaming", "criadores", "marketplace"],
   manifest: "/manifest.json",
+  openGraph: {
+    title: "CREATOR — Plataforma de Criadores",
+    description: "Descubra e apoie criadores de conteúdo exclusivo. Lives interativas, mídia premium e uma comunidade vibrante.",
+    type: "website",
+    locale: "pt_BR",
+    siteName: "CREATOR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CREATOR — Plataforma de Criadores",
+    description: "Descubra e apoie criadores de conteúdo exclusivo.",
+  },
 };
 
 export const viewport: Viewport = {

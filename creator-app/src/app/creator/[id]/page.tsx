@@ -50,12 +50,20 @@ export default function CreatorProfilePage({ params }: { params: Promise<{ id: s
             <div className="px-4 -mt-16 relative z-10">
                 {/* Avatar */}
                 <div className="flex items-end gap-4 mb-4">
-                    <div
-                        className="w-28 h-28 rounded-full border-4 border-dark-900 flex items-center justify-center text-white font-bold text-3xl shadow-xl"
-                        style={{ background: avatarGradients[index % avatarGradients.length] }}
-                    >
-                        {creator.name.split(" ").map((n) => n[0]).join("")}
-                    </div>
+                    {creator.avatar ? (
+                        <img
+                            src={creator.avatar}
+                            alt={creator.name}
+                            className="w-28 h-28 rounded-full border-4 border-dark-900 object-cover shadow-xl"
+                        />
+                    ) : (
+                        <div
+                            className="w-28 h-28 rounded-full border-4 border-dark-900 flex items-center justify-center text-white font-bold text-3xl shadow-xl"
+                            style={{ background: avatarGradients[index % avatarGradients.length] }}
+                        >
+                            {creator.name.split(" ").map((n) => n[0]).join("")}
+                        </div>
+                    )}
                     <div className="flex-1 pb-2">
                         <div className="flex items-center gap-2">
                             <h1 className="text-2xl font-bold text-white">{creator.name}</h1>
@@ -110,8 +118,8 @@ export default function CreatorProfilePage({ params }: { params: Promise<{ id: s
                     <button
                         onClick={() => setIsSubscribed(!isSubscribed)}
                         className={`flex-1 py-3 rounded-xl font-bold text-sm transition-all ${isSubscribed
-                                ? "bg-dark-700 text-white/60 border border-white/10"
-                                : "gradient-purple text-white shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40"
+                            ? "bg-dark-700 text-white/60 border border-white/10"
+                            : "gradient-purple text-white shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40"
                             }`}
                     >
                         {isSubscribed ? "✓ Inscrito" : `Assinar · R$${creator.monthlyPrice}`}
@@ -134,8 +142,8 @@ export default function CreatorProfilePage({ params }: { params: Promise<{ id: s
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={`flex-1 py-3 text-sm font-semibold transition-all border-b-2 ${activeTab === tab.id
-                                    ? "text-purple-400 border-purple-500"
-                                    : "text-white/40 border-transparent hover:text-white/60"
+                                ? "text-purple-400 border-purple-500"
+                                : "text-white/40 border-transparent hover:text-white/60"
                                 }`}
                         >
                             {tab.label}
